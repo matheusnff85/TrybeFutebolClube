@@ -1,6 +1,6 @@
-import { userInterface } from '../../interfaces/userInterface';
+import { UserInterface } from '../../interfaces/userInterface';
 
-const oneUser: userInterface  = {
+const oneUser: UserInterface  = {
   id: 1,
   username: 'miltoncrf',
   email: 'miltaocrf@gmail.com',

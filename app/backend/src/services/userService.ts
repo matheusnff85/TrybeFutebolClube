@@ -16,4 +16,9 @@ export default class UserService {
     const token = generateToken(email);
     return token;
   }
+
+  public async validate(userEmail: string) {
+    const result = await this.userModel.findOne(userEmail);
+    return result?.role;
+  }
 }

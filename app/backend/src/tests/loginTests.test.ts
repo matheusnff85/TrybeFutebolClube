@@ -61,6 +61,16 @@ describe('Login tests', () => {
       expect(response.status).to.be.equal(200);
       expect(response.body).to.have.a.key('token');
     });
+
+    // it('teste', async () => {
+    //   const token: Response = await chai.request(app).post('/login').send({
+    //     email: oneUser.email, 
+    //     password: 'secret_user'
+    //   });
+    //   const response: Response = await chai.request(app).get('/login/validate').set('authorization', token.body)
+      
+    //   console.log(response.body);
+    // })
   });
 
   describe('Os dados informados estão incorretos', () => {

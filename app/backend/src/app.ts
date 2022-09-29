@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import errorHandler from './middlewares/errorHandler';
 import loginRouter from './routes/login.route';
 
@@ -23,6 +24,7 @@ class App {
     };
 
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(accessControl);
     this.app.use(loginRouter);
     this.app.use(errorHandler);

@@ -5,8 +5,8 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
 import { oneTeam, allTeams } from './mocks/teamsMocks';
-import TeamsModels from '../models/TeamsModels';
 import { TeamInterface } from '../interfaces/teamInterface';
+import TeamsModels from '../models/TeamsModel';
 import Teams from '../database/models/Teams';
 
 chai.use(chaiHttp);
@@ -17,7 +17,7 @@ const teamsModel = new TeamsModels();
 describe('Teams testes', () => {
   describe('Ao realizar uma requisição para todos os times', () => {
     before(async () => {
-      sinon.stub(Teams, 'findAll').resolves({...allTeams} as Teams);
+      sinon.stub(Teams, 'findAll').resolves({...allTeams} as Teams[]);
       sinon.stub(teamsModel, 'findAll').resolves({...allTeams} as TeamInterface[]);
     });
     after(async () => {

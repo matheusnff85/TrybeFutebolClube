@@ -9,6 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 const validateToken = (req: Request, _res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
   if (!token || token === undefined || token === '') {
+    console.log(token);
     throw new CustomError(StatusCodes.UNAUTHORIZED, 'Token not found');
   }
   const data = jwt.verify(token, JWT_SECRET);
@@ -18,7 +19,6 @@ const validateToken = (req: Request, _res: Response, next: NextFunction) => {
 
 const getEmailByToken = (token: string) => {
   const result = jwt.verify(token, JWT_SECRET);
-  console.log(result);
   return (<any>result).email;
 };
 

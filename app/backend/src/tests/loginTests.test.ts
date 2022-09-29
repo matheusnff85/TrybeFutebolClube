@@ -14,6 +14,8 @@ chai.use(chaiHttp);
 const { expect } = chai;
 const userModel = new UserModel();
 
+const invalidToken = 'askdsajldasldkjasjdklasjdklasjkldjas.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NjQ0ODM2MDgsImV4cCI6MTY2NDU3MDAwOH0.3MUs_2S0CKG3S72Cgj1XXM3fW-WAcya1i7g2AdCTLjk'
+
 describe('Login tests', () => {
   /**
    * Exemplo do uso de stubs com tipos
@@ -62,15 +64,6 @@ describe('Login tests', () => {
       expect(response.body).to.have.a.key('token');
     });
 
-    // it('teste', async () => {
-    //   const token: Response = await chai.request(app).post('/login').send({
-    //     email: oneUser.email, 
-    //     password: 'secret_user'
-    //   });
-    //   const response: Response = await chai.request(app).get('/login/validate').set('authorization', token.body)
-      
-    //   console.log(response.body);
-    // })
   });
 
   describe('Os dados informados estão incorretos', () => {
@@ -112,6 +105,38 @@ describe('Login tests', () => {
       expect(response.status).to.be.equal(400);
       expect(response.body.message).to.be.equal('All fields must be filled');
     });
+  });
 
+  describe('Testa a validação de token', () => {
+    describe('O token informado é válido', () => {
+      before(async () => {
+        sinon.stub(User, 'findOne').resolves({...oneUser} as User);
+        sinon.stub(userModel, 'findOne').resolves({...oneUser} as UserInterface);
+      });
+  
+      after(async () => {
+        (User.findOne as sinon.SinonStub).restore();
+        (userModel.findOne as sinon.SinonStub).restore();
+      });
+  
+      it('retorna a role do usuario', async () => {
+        const getToken = await chai.request(app).post('/login')
+          .send({ email: oneUser.email, password: 'secret_user' });
+        const { token } = getToken.body;
+        const response: Response = await chai.request(app).get('/login/validate').set('authorization', token);
+  
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.have.a.key('role');
+      });
+    });
+  
+    describe('O Token informado é inválido', () => {
+      it('o token não foi informado e retorna um erro', async () => {
+        const response: Response = await chai.request(app).get('/login/validate').set('authorization', '');
+
+        expect(response.status).to.be.equal(401);
+        expect(response.body.message).to.be.equal('Token not found');
+      });
+    });
   });
 });

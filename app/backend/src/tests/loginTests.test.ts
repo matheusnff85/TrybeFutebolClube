@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
-import oneUser from './mocks/userMockst';
+import oneUser from './mocks/userMocks';
 import UserModel from '../models/UserModel';
 import { UserInterface } from '../interfaces/userInterface';
 import User from '../database/models/User';
@@ -14,35 +14,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 const userModel = new UserModel();
 
-const invalidToken = 'askdsajldasldkjasjdklasjdklasjkldjas.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NjQ0ODM2MDgsImV4cCI6MTY2NDU3MDAwOH0.3MUs_2S0CKG3S72Cgj1XXM3fW-WAcya1i7g2AdCTLjk'
-
 describe('Login tests', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
-  // let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
   describe('Os dados informados estão corretos', () => {
     before(async () => {
       sinon.stub(User, 'findOne').resolves({...oneUser} as User);

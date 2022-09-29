@@ -4,9 +4,10 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
-// import userModel from '../models/UserModel';
 import oneUser from './mocks/userMockst';
 import UserModel from '../models/UserModel';
+import { UserInterface } from '../interfaces/userInterface';
+import User from '../database/models/User';
 
 chai.use(chaiHttp);
 
@@ -42,12 +43,12 @@ describe('Login tests', () => {
 
   describe('Os dados informados estão corretos', () => {
     before(async () => {
-      sinon
-        .stub(userModel, 'findOne')
-        .resolves(oneUser);
+      sinon.stub(User, 'findOne').resolves({...oneUser} as User);
+      sinon.stub(userModel, 'findOne').resolves({...oneUser} as UserInterface);
     });
 
     after(async () => {
+      (User.findOne as sinon.SinonStub).restore();
       (userModel.findOne as sinon.SinonStub).restore();
     });
 
@@ -56,7 +57,6 @@ describe('Login tests', () => {
         email: oneUser.email, 
         password: 'secret_user'
       });
-      console.log(response.body);
 
       expect(response.status).to.be.equal(200);
       expect(response.body).to.have.a.key('token');

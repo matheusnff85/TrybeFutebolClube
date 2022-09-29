@@ -62,4 +62,46 @@ describe('Login tests', () => {
       expect(response.body).to.have.a.key('token');
     });
   });
+
+  describe('Os dados informados estão incorretos', () => {
+    before(async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+      sinon.stub(userModel, 'findOne').resolves(null);
+    });
+    after(async () => {
+      (User.findOne as sinon.SinonStub).restore();
+      (userModel.findOne as sinon.SinonStub).restore();
+    });
+
+    it('A requisição retorna um erro e uma mensagem', async () => {
+      const response: Response = await chai.request(app).post('/login').send({
+        email: oneUser.email, password: 'senha_incorreta'
+      });
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body.message).to.be.equal('Incorrect email or password');
+    });
+  });
+
+  describe('Faltam alguns dados ou eles foram informados incorretamente', () => {
+
+    it('O email não foi informado', async () => {
+      const response: Response = await chai.request(app).post('/login').send({
+        password: 'senha_incorreta'
+      });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body.message).to.be.equal('All fields must be filled');
+    });
+
+    it('A senha não foi informada', async () => {
+      const response: Response = await chai.request(app).post('/login').send({
+        email: oneUser.email,
+      });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body.message).to.be.equal('All fields must be filled');
+    });
+
+  });
 });

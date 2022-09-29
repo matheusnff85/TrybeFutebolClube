@@ -4,13 +4,14 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
-import userModel from '../database/models/UserModel';
+// import userModel from '../models/UserModel';
 import oneUser from './mocks/userMockst';
+import UserModel from '../models/UserModel';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
-
+const userModel = new UserModel();
 
 describe('Login tests', () => {
   /**
@@ -43,7 +44,7 @@ describe('Login tests', () => {
     before(async () => {
       sinon
         .stub(userModel, 'findOne')
-        .resolves({...oneUser} as userModel);
+        .resolves(oneUser);
     });
 
     after(async () => {
@@ -52,8 +53,10 @@ describe('Login tests', () => {
 
     it('Retorna o status de sucesso e o token', async () => {
       const response: Response = await chai.request(app).post('/login').send({
-        email: oneUser.email, password: oneUser.password
+        email: oneUser.email, 
+        password: 'secret_user'
       });
+      console.log(response.body);
 
       expect(response.status).to.be.equal(200);
       expect(response.body).to.have.a.key('token');

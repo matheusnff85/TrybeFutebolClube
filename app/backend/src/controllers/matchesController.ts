@@ -9,7 +9,8 @@ export default class MatchesController {
     try {
       const { inProgress } = req.query;
       if (inProgress === 'true' || inProgress === 'false') {
-        return '';
+        const result = await this.matchesServices.findByProgress(inProgress === 'true');
+        return res.status(200).json(result);
       }
       const result = await this.matchesServices.findAll();
       return res.status(StatusCodes.OK).json(result);

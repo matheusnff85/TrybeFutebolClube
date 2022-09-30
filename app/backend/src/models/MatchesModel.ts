@@ -14,4 +14,15 @@ export default class MatchesModel {
     });
     return result;
   }
+
+  public async findByProgress(progress: boolean): Promise<MatchInterface[] | null> {
+    const result = await this._matchesModel.findAll({
+      include: [
+        { model: Teams, as: 'teamHome', attributes: ['teamName'] },
+        { model: Teams, as: 'teamAway', attributes: ['teamName'] },
+      ],
+      where: { inProgress: progress },
+    });
+    return result;
+  }
 }

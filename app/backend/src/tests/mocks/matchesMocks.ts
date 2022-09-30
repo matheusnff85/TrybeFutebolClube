@@ -73,4 +73,66 @@ const allMatches: MatchInterface[] = [
   }
 ];
 
-export { allMatches };
+const inProgressMatches: MatchInterface[] = [
+  {
+    id: 3,
+    homeTeam: 7,
+    homeTeamGoals: 5,
+    awayTeam: 11,
+    awayTeamGoals: 0,
+    inProgress: true,
+    teamHome: {
+      teamName: 'Flamengo'
+    },
+    teamAway: {
+      teamName: 'Palmeiras'
+    }
+  },
+  {
+    id: 5,
+    homeTeam: 13,
+    homeTeamGoals: 1,
+    awayTeam: 10,
+    awayTeamGoals: 1,
+    inProgress: true,
+    teamHome: {
+      teamName: 'Fluminense'
+    },
+    teamAway: {
+      teamName: 'Vasco'
+    }
+  }
+];
+
+const finishedMatches: MatchInterface[] = [
+  {
+    id: 1,
+    homeTeam: 16,
+    homeTeamGoals: 1,
+    awayTeam: 8,
+    awayTeamGoals: 1,
+    inProgress: false,
+    teamHome: {
+      teamName: 'São Paulo'
+    },
+    teamAway: {
+      teamName: 'Grêmio'
+    }
+  },
+  {
+    id: 4,
+    homeTeam: 2,
+    homeTeamGoals: 0,
+    awayTeam: 1,
+    awayTeamGoals: 4,
+    inProgress: false,
+    teamHome: {
+      teamName: 'Avai'
+    },
+    teamAway: {
+      teamName: 'Cruzeiro'
+    }
+  }
+];
+
+export { allMatches, inProgressMatches, finishedMatches };

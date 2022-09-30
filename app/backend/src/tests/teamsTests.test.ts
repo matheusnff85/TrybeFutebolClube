@@ -17,8 +17,8 @@ const teamsModel = new TeamsModels();
 describe('Teams testes', () => {
   describe('Ao realizar uma requisição para todos os times', () => {
     before(async () => {
-      sinon.stub(Teams, 'findAll').resolves({...allTeams} as Teams[]);
-      sinon.stub(teamsModel, 'findAll').resolves({...allTeams} as TeamInterface[]);
+      sinon.stub(Teams, 'findAll').resolves(allTeams as Teams[]);
+      sinon.stub(teamsModel, 'findAll').resolves(allTeams as TeamInterface[]);
     });
     after(async () => {
       (Teams.findAll as sinon.SinonStub).restore();
@@ -29,7 +29,7 @@ describe('Teams testes', () => {
       const response: Response = await chai.request(app).get('/teams');
 
       expect(response.status).to.be.equal(200);
-      // expect(response.body)
+      expect(response.body).to.have.length(4);
     });
   });
 
@@ -47,7 +47,8 @@ describe('Teams testes', () => {
       const response: Response = await chai.request(app).get('/teams/1');
 
       expect(response.status).to.be.equal(200);
-      // expect(response.body)
+      expect(response.body.id).to.be.equal(1);
+      expect(response.body.teamName).to.be.equal('Flamengo');
     });
   });
 });

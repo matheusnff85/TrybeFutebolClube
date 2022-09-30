@@ -9,7 +9,7 @@ export default class TeamsModel {
     return result;
   }
 
-  public async findOne(id: number): Promise<TeamInterface | null> {
+  public async findOne(id: string): Promise<TeamInterface | null> {
     const result = await this._teamsModel.findOne({ where: { id } });
     return result;
   }

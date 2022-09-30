@@ -16,7 +16,8 @@ export default class TeamsController {
 
   public findOne: RequestHandler = async (req, res, next) => {
     try {
-      const result = await this.teamsServices.findOne(req.body.id);
+      const { id } = req.params;
+      const result = await this.teamsServices.findOne(id);
       return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       next(error);

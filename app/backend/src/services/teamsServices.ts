@@ -10,7 +10,7 @@ export default class TeamsServices {
     return result;
   }
 
-  public async findOne(id: number) {
+  public async findOne(id: string) {
     const result = await this.teamsModel.findOne(id);
     if (!result) throw new CustomError(StatusCodes.NOT_FOUND, 'Team not found');
     return result;

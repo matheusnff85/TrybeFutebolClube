@@ -9,8 +9,8 @@ export default class TeamsModel {
     return result;
   }
 
-  public async findOne(email: string): Promise<TeamInterface | null> {
-    const result = await this._teamsModel.findOne({ where: { email } });
+  public async findOne(id: number): Promise<TeamInterface | null> {
+    const result = await this._teamsModel.findOne({ where: { id } });
     return result;
   }
 }

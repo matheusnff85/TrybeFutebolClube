@@ -107,7 +107,7 @@ describe('Login tests', () => {
         const response: Response = await chai.request(app).get('/login/validate').set('authorization', '');
 
         expect(response.status).to.be.equal(401);
-        expect(response.body.message).to.be.equal('Token not found');
+        expect(response.body.message).to.be.equal('Token must be a valid token');
       });
     });
   });

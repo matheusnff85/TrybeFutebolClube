@@ -12,11 +12,16 @@ import { allMatches,
   createdMatch } from './mocks/matchesMocks';
 import MatchesModels from '../models/MatchesModel';
 import Matches from '../database/models/Matches';
+import oneUser from './mocks/userMocks';
+import UserModel from '../models/UserModel';
+import User from '../database/models/User';
+import { UserInterface } from '../interfaces/userInterface';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 const matchesModel = new MatchesModels();
+const userModel = new UserModel();
 
 describe('Matches Tests', () => {
   describe('Ao realizar uma requisição por todas as partidas', () => {
@@ -75,16 +80,26 @@ describe('Matches Tests', () => {
 
   describe('Ao criar uma nova partida', () => {
     before(async () => {
+      sinon.stub(User, 'findOne').resolves({...oneUser} as User);
+      sinon.stub(userModel, 'findOne').resolves({...oneUser} as UserInterface);
+
       sinon.stub(Matches, 'create').resolves(createdMatch as Matches);
       sinon.stub(matchesModel, 'create').resolves(createdMatch as CreatedMatchInterface);
     });
     after(async () => {
+      (User.findOne as sinon.SinonStub).restore();
+      (userModel.findOne as sinon.SinonStub).restore();
+
       (Matches.create as sinon.SinonStub).restore();
       (matchesModel.create as sinon.SinonStub).restore();
     });
 
     it('Retorna um objeto com a nova partida criada', async () => {
-      const response: Response = await chai.request(app).post('/matches').send(newMatch);
+      const getToken = await chai.request(app).post('/login')
+          .send({ email: oneUser.email, password: 'secret_user' });
+      const { token } = getToken.body;
+
+      const response: Response = await chai.request(app).post('/matches').send(newMatch).set('authorization', token);
 
       expect(response.status).to.be.equal(201);
       expect(response.body.id).to.be.equal(1);

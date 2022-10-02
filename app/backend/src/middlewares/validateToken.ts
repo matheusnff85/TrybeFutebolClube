@@ -8,12 +8,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
 const validateToken = (req: Request, _res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
-  if (!token || token === undefined || token === '') {
-    console.log(token);
-    throw new CustomError(StatusCodes.UNAUTHORIZED, 'Token not found');
-  }
+  if (!token) throw new CustomError(StatusCodes.UNAUTHORIZED, 'Token must be a valid token');
   const data = jwt.verify(token, JWT_SECRET);
-  if (!data) throw new CustomError(StatusCodes.UNAUTHORIZED, 'Invalid token');
+  if (!data) throw new CustomError(StatusCodes.UNAUTHORIZED, 'Token must be a valid token');
   next();
 };
 

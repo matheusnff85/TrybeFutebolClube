@@ -8,3 +8,12 @@ export interface MatchInterface {
   teamHome?: object;
   teamAway?: object;
 }
+
+export interface CreatedMatchInterface {
+  id?: number;
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  inProgress: boolean
+}

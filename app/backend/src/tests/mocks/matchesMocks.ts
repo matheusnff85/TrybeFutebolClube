@@ -1,4 +1,5 @@
-import { MatchInterface } from '../../interfaces/matchInterface';
+import Matches from '../../database/models/Matches';
+import { MatchInterface, CreatedMatchInterface } from '../../interfaces/matchInterface';
 
 const allMatches: MatchInterface[] = [
   {
@@ -135,4 +136,21 @@ const finishedMatches: MatchInterface[] = [
   }
 ];
 
-export { allMatches, inProgressMatches, finishedMatches };
+const newMatch: CreatedMatchInterface = {
+  homeTeam: 16,
+  awayTeam: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+  inProgress: true
+};
+
+const createdMatch: CreatedMatchInterface = {
+  id: 1,
+  homeTeam: 16,
+  awayTeam: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+  inProgress: true
+}
+
+export { allMatches, inProgressMatches, finishedMatches, newMatch, createdMatch };

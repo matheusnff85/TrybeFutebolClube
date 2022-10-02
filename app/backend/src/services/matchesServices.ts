@@ -1,3 +1,4 @@
+import { CreatedMatchInterface } from '../interfaces/matchInterface';
 import MatchesModel from '../models/MatchesModel';
 
 export default class MatchesServices {
@@ -10,6 +11,12 @@ export default class MatchesServices {
 
   public async findByProgress(progress: boolean) {
     const result = await this.matchesModel.findByProgress(progress);
+    return result;
+  }
+
+  public async create(newMatch: CreatedMatchInterface) {
+    // validate
+    const result = await this.matchesModel.create(newMatch);
     return result;
   }
 }

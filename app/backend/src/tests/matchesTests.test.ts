@@ -4,8 +4,12 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
-import { MatchInterface } from '../interfaces/matchInterface';
-import { allMatches, inProgressMatches, finishedMatches } from './mocks/matchesMocks';
+import { MatchInterface, CreatedMatchInterface } from '../interfaces/matchInterface';
+import { allMatches,
+  inProgressMatches,
+  finishedMatches,
+  newMatch,
+  createdMatch } from './mocks/matchesMocks';
 import MatchesModels from '../models/MatchesModel';
 import Matches from '../database/models/Matches';
 
@@ -68,4 +72,22 @@ describe('Matches Tests', () => {
       expect(response.body[0].inProgress).to.be.equal(false);
     });
   });
+
+  describe('Ao criar uma nova partida', () => {
+    before(async () => {
+      sinon.stub(Matches, 'create').resolves(createdMatch as Matches);
+      sinon.stub(matchesModel, 'create').resolves(createdMatch as CreatedMatchInterface);
+    });
+    after(async () => {
+      (Matches.create as sinon.SinonStub).restore();
+      (matchesModel.create as sinon.SinonStub).restore();
+    });
+
+    it('Retorna um objeto com a nova partida criada', async () => {
+      const response: Response = await chai.request(app).post('/matches').send(newMatch);
+
+      expect(response.status).to.be.equal(201);
+      expect(response.body.id).to.be.equal(1);
+    });
+  })
 });

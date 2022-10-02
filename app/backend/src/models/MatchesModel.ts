@@ -1,6 +1,6 @@
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
-import { MatchInterface } from '../interfaces/matchInterface';
+import { CreatedMatchInterface, MatchInterface } from '../interfaces/matchInterface';
 
 export default class MatchesModel {
   private _matchesModel = Matches;
@@ -23,6 +23,11 @@ export default class MatchesModel {
       ],
       where: { inProgress: progress },
     });
+    return result;
+  }
+
+  public async create(newMatch: CreatedMatchInterface): Promise<MatchInterface> {
+    const result = await this._matchesModel.create(newMatch);
     return result;
   }
 }

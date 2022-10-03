@@ -64,4 +64,20 @@ export default class LeaderboardServices {
     });
     return list;
   }
+
+  public static orderMatches(matches: LeaderboardInterface[]) {
+    const result = matches.map((match) => ({
+      ...match,
+      goalsBalance: match.goalsFavor - match.goalsOwn,
+      efficiency: ((match.totalPoints / (match.totalGames / 3)) * 100).toFixed(2),
+    }));
+    result.sort((a, b) => (
+      b.totalPoints - a.totalPoints
+      || b.totalVictories - a.totalVictories
+      || b.goalsBalance - a.goalsBalance
+      || b.goalsFavor - a.goalsFavor
+      || a.goalsOwn - b.goalsOwn
+    ));
+    return result;
+  }
 }

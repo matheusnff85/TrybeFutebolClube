@@ -108,11 +108,11 @@ describe('Matches Tests', () => {
 
   describe('Ao finalizar uma partida', () => {
     before(async () => {
-      sinon.stub(Matches, 'finish').resolves('Finished' as string);
+      sinon.stub(Matches, 'update').resolves();
       sinon.stub(matchesModel, 'finish').resolves('Finished' as string);
     });
     after(async () => {
-      (Matches.finish as sinon.SinonStub).restore();
+      (Matches.update as sinon.SinonStub).restore();
       (matchesModel.finish as sinon.SinonStub).restore();
     });
 

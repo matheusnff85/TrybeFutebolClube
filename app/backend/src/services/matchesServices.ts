@@ -19,4 +19,9 @@ export default class MatchesServices {
     const result = await this.matchesModel.create(newMatch);
     return result;
   }
+
+  public async finish(id: string) {
+    const result = await this.matchesModel.finish(id);
+    return result;
+  }
 }

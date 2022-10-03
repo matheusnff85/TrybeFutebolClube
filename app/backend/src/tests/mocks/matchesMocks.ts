@@ -1,4 +1,3 @@
-import Matches from '../../database/models/Matches';
 import { MatchInterface, CreatedMatchInterface } from '../../interfaces/matchInterface';
 
 const allMatches: MatchInterface[] = [

@@ -19,7 +19,6 @@ import { UserInterface } from '../interfaces/userInterface';
 import TeamsModels from '../models/TeamsModel';
 import Teams from '../database/models/Teams';
 import { oneTeam } from './mocks/teamsMocks';
-import { TeamInterface } from '../interfaces/teamInterface';
 
 chai.use(chaiHttp);
 

@@ -137,7 +137,7 @@ const finishedMatches: MatchInterface[] = [
 ];
 
 const newMatch: CreatedMatchInterface = {
-  homeTeam: 16,
+  homeTeam: 5,
   awayTeam: 8,
   homeTeamGoals: 2,
   awayTeamGoals: 2,
@@ -146,7 +146,7 @@ const newMatch: CreatedMatchInterface = {
 
 const createdMatch: CreatedMatchInterface = {
   id: 1,
-  homeTeam: 16,
+  homeTeam: 5,
   awayTeam: 8,
   homeTeamGoals: 2,
   awayTeamGoals: 2,

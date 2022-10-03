@@ -16,11 +16,16 @@ import oneUser from './mocks/userMocks';
 import UserModel from '../models/UserModel';
 import User from '../database/models/User';
 import { UserInterface } from '../interfaces/userInterface';
+import TeamsModels from '../models/TeamsModel';
+import Teams from '../database/models/Teams';
+import { oneTeam } from './mocks/teamsMocks';
+import { TeamInterface } from '../interfaces/teamInterface';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 const matchesModel = new MatchesModels();
+const teamsModel = new TeamsModels();
 const userModel = new UserModel();
 
 describe('Matches Tests', () => {
@@ -85,6 +90,9 @@ describe('Matches Tests', () => {
 
       sinon.stub(Matches, 'create').resolves(createdMatch as Matches);
       sinon.stub(matchesModel, 'create').resolves(createdMatch as CreatedMatchInterface);
+
+      sinon.stub(Teams, 'findOne').resolves(oneTeam as Teams);
+      sinon.stub(teamsModel, 'findOne').resolves(oneTeam);
     });
     after(async () => {
       (User.findOne as sinon.SinonStub).restore();
@@ -92,6 +100,9 @@ describe('Matches Tests', () => {
 
       (Matches.create as sinon.SinonStub).restore();
       (matchesModel.create as sinon.SinonStub).restore();
+
+      (Teams.findOne as sinon.SinonStub).restore();
+      (teamsModel.findOne as sinon.SinonStub).restore();
     });
 
     it('Retorna um objeto com a nova partida criada', async () => {

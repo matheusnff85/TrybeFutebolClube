@@ -9,7 +9,7 @@ const matchSchema = Joi.object({
   awayTeam: Joi.number().required(),
   homeTeamGoals: Joi.number().required(),
   awayTeamGoals: Joi.number().required(),
-  inProgress: Joi.boolean().required(),
+  inProgress: Joi.boolean(),
 });
 
 const teamsModel = new TeamsModel();

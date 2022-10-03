@@ -1,5 +1,6 @@
 import { CreatedMatchInterface } from '../interfaces/matchInterface';
 import MatchesModel from '../models/MatchesModel';
+import validateNewMatch from '../validations/matchesValidation';
 
 export default class MatchesServices {
   constructor(private matchesModel: MatchesModel = new MatchesModel()) {}
@@ -15,7 +16,7 @@ export default class MatchesServices {
   }
 
   public async create(newMatch: CreatedMatchInterface) {
-    // validate
+    await validateNewMatch(newMatch);
     const result = await this.matchesModel.create(newMatch);
     return result;
   }

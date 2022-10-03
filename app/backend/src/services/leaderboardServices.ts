@@ -20,6 +20,16 @@ export default class LeaderboardServices {
     return ordernedMatches;
   }
 
+  public async getAll() {
+    const matches = await this.matchesModel.findByProgress(false);
+    const homeMatches = LeaderboardServices.getHomeMatches(matches);
+    const awayMatches = LeaderboardServices.getAwayMatches(matches);
+    const leaderboard = LeaderboardServices
+      .createLeaderboard([...homeMatches as any, ...awayMatches as any]);
+    const ordernedMatches = LeaderboardServices.orderMatches(leaderboard as any);
+    return ordernedMatches;
+  }
+
   public static getHomeMatches(matches: LeaderboardMatch[]) {
     const homeMatches = matches.forEach((match) => {
       let teamScore = { wins: 0, losses: 0, draws: 0, points: 0 };
@@ -64,7 +74,7 @@ export default class LeaderboardServices {
 
   public static createLeaderboard(matches: LeaderboardInterface[]) {
     const list = [] as LeaderboardInterface[];
-    return matches.forEach((match) => {
+    matches.forEach((match) => {
       const matchIndex = list.findIndex((current) => current.name === match.name);
       if (matchIndex === -1) list.push({ ...match, totalGames: 1 });
       else {

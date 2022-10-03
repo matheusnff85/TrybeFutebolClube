@@ -31,7 +31,7 @@ export default class LeaderboardServices {
   }
 
   public static getHomeMatches(matches: LeaderboardMatch[]) {
-    const homeMatches = matches.forEach((match) => {
+    const homeMatches = matches.map((match) => {
       let teamScore = { wins: 0, losses: 0, draws: 0, points: 0 };
       if (match.homeTeamGoals === match.awayTeamGoals) {
         teamScore = { ...teamScore, points: 1, draws: 1 };
@@ -52,7 +52,7 @@ export default class LeaderboardServices {
   }
 
   public static getAwayMatches(matches: LeaderboardMatch[]) {
-    const awayMatches = matches.forEach((match) => {
+    const awayMatches = matches.map((match) => {
       let teamScore = { wins: 0, losses: 0, draws: 0, points: 0 };
       if (match.awayTeamGoals === match.homeTeamGoals) {
         teamScore = { ...teamScore, points: 1, draws: 1 };
@@ -94,7 +94,7 @@ export default class LeaderboardServices {
     const result = matches.map((match) => ({
       ...match,
       goalsBalance: match.goalsFavor - match.goalsOwn,
-      efficiency: ((match.totalPoints / (match.totalGames / 3)) * 100).toFixed(2),
+      efficiency: ((match.totalPoints / (match.totalGames * 3)) * 100).toFixed(2),
     }));
     result.sort((a, b) => (
       b.totalPoints - a.totalPoints

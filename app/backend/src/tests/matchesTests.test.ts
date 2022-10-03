@@ -134,4 +134,22 @@ describe('Matches Tests', () => {
       expect(response.body.message).to.be.equal('Finished');
     });
   });
+
+  describe('Ao atualizar os gols de uma partida', () => {
+    before(async () => {
+      sinon.stub(Matches, 'update').resolves();
+      sinon.stub(matchesModel, 'update').resolves('Match Updated' as string);
+    });
+    after(async () => {
+      (Matches.update as sinon.SinonStub).restore();
+      (matchesModel.update as sinon.SinonStub).restore();
+    });
+
+    it('Retorna o status 200 e uma mensagem de partida atualizada', async () => {
+      const response: Response = await chai.request(app).patch('/matches/44');
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body.message).to.be.equal('Match Updated');
+    });
+  });
 });

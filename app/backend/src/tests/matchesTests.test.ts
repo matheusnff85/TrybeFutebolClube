@@ -104,5 +104,23 @@ describe('Matches Tests', () => {
       expect(response.status).to.be.equal(201);
       expect(response.body.id).to.be.equal(1);
     });
-  })
+  });
+
+  describe('Ao finalizar uma partida', () => {
+    before(async () => {
+      sinon.stub(Matches, 'finish').resolves('Finished' as string);
+      sinon.stub(matchesModel, 'finish').resolves('Finished' as string);
+    });
+    after(async () => {
+      (Matches.finish as sinon.SinonStub).restore();
+      (matchesModel.finish as sinon.SinonStub).restore();
+    });
+
+    it('Retorna o status 200 e a mensagem de finalizada', async () => {
+      const response: Response = await chai.request(app).patch('/matches/45/finish');
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body.message).to.be.equal('Finished');
+    });
+  });
 });

@@ -1,3 +1,4 @@
+import { LeaderboardMatch } from '../interfaces/leaderboardInterface';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import { CreatedMatchInterface,
@@ -16,7 +17,7 @@ export default class MatchesModel {
     return result;
   }
 
-  public async findByProgress(progress: boolean): Promise<MatchInterface[] | null> {
+  public async findByProgress(progress: boolean): Promise<LeaderboardMatch[]> {
     const result = await this._matchesModel.findAll({
       include: [
         { model: Teams, as: 'teamHome', attributes: ['teamName'] },

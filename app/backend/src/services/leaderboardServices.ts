@@ -1,11 +1,26 @@
-import { LeaderboardMatchInterface } from '../interfaces/matchInterface';
-import { LeaderboardInterface } from '../interfaces/leaderboardInterface';
+import { LeaderboardInterface, LeaderboardMatch } from '../interfaces/leaderboardInterface';
 import MatchesModel from '../models/MatchesModel';
 
 export default class LeaderboardServices {
   constructor(private matchesModel: MatchesModel = new MatchesModel()) {}
 
-  public static getHomeMatches(matches: LeaderboardMatchInterface[]) {
+  public async getHome() {
+    const matches = await this.matchesModel.findByProgress(false);
+    const homeMatches = LeaderboardServices.getHomeMatches(matches);
+    const leaderboard = LeaderboardServices.createLeaderboard(homeMatches as any);
+    const ordernedMatches = LeaderboardServices.orderMatches(leaderboard as any);
+    return ordernedMatches;
+  }
+
+  public async getAway() {
+    const matches = await this.matchesModel.findByProgress(false);
+    const awayMatches = LeaderboardServices.getAwayMatches(matches);
+    const leaderboard = LeaderboardServices.createLeaderboard(awayMatches as any);
+    const ordernedMatches = LeaderboardServices.orderMatches(leaderboard as any);
+    return ordernedMatches;
+  }
+
+  public static getHomeMatches(matches: LeaderboardMatch[]) {
     const homeMatches = matches.forEach((match) => {
       let teamScore = { wins: 0, losses: 0, draws: 0, points: 0 };
       if (match.homeTeamGoals === match.awayTeamGoals) {
@@ -26,7 +41,7 @@ export default class LeaderboardServices {
     return homeMatches;
   }
 
-  public static getAwayMatches(matches: LeaderboardMatchInterface[]) {
+  public static getAwayMatches(matches: LeaderboardMatch[]) {
     const awayMatches = matches.forEach((match) => {
       let teamScore = { wins: 0, losses: 0, draws: 0, points: 0 };
       if (match.awayTeamGoals === match.homeTeamGoals) {
@@ -49,7 +64,7 @@ export default class LeaderboardServices {
 
   public static createLeaderboard(matches: LeaderboardInterface[]) {
     const list = [] as LeaderboardInterface[];
-    matches.forEach((match) => {
+    return matches.forEach((match) => {
       const matchIndex = list.findIndex((current) => current.name === match.name);
       if (matchIndex === -1) list.push({ ...match, totalGames: 1 });
       else {

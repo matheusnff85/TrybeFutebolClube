@@ -5,8 +5,12 @@ export interface MatchInterface {
   homeTeamGoals: number;
   awayTeam: number;
   awayTeamGoals: number;
-  teamHome?: object;
-  teamAway?: object;
+  teamHome?: {
+    teamName: string
+  };
+  teamAway?: {
+    teamName: string
+  }
 }
 
 export interface CreatedMatchInterface {
@@ -23,9 +27,7 @@ export interface updateMatchGoals {
   awayTeamGoals: number;
 }
 
-export interface LeaderboardMatchInterface {
-  id?: number,
-  inProgress?: boolean
+export interface teste {
   homeTeam: number;
   homeTeamGoals: number;
   awayTeam: number;

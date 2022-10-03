@@ -1,4 +1,4 @@
-import { CreatedMatchInterface } from '../interfaces/matchInterface';
+import { CreatedMatchInterface, updateMatchGoals } from '../interfaces/matchInterface';
 import MatchesModel from '../models/MatchesModel';
 import validateNewMatch from '../validations/matchesValidation';
 
@@ -23,6 +23,11 @@ export default class MatchesServices {
 
   public async finish(id: string) {
     const result = await this.matchesModel.finish(id);
+    return result;
+  }
+
+  public async update(goalsObject: updateMatchGoals, id: string) {
+    const result = await this.matchesModel.update(goalsObject, id);
     return result;
   }
 }

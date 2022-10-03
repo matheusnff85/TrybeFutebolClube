@@ -17,3 +17,8 @@ export interface CreatedMatchInterface {
   awayTeamGoals: number;
   inProgress: boolean
 }
+
+export interface updateMatchGoals {
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}

@@ -1,6 +1,7 @@
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
-import { CreatedMatchInterface, MatchInterface } from '../interfaces/matchInterface';
+import { CreatedMatchInterface,
+  MatchInterface, updateMatchGoals } from '../interfaces/matchInterface';
 
 export default class MatchesModel {
   private _matchesModel = Matches;
@@ -37,5 +38,14 @@ export default class MatchesModel {
       { where: { id } },
     );
     return 'Finished';
+  }
+
+  public async update(goalsObject: updateMatchGoals, id: string): Promise<string> {
+    const { homeTeamGoals, awayTeamGoals } = goalsObject;
+    await this._matchesModel.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    return 'Match Updated';
   }
 }

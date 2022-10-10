@@ -1,6 +1,6 @@
 # Trybe Futebol Clube
 
-O objetivo deste projeto era desenvolver uma API com Typescript seguindo o método TDD e os principios da POO(Programação orientada a objeto), o serviço de frontend já desenvolvido esperava apenas o desenvolvimento do backend com a regra de negocio adequada para popular corretamente o frontend, seu banco de dados é gerenciado pelo Sequelize, seguindo a arquitetura MSC.
+O objetivo deste projeto era desenvolver uma API com Typescript seguindo o método TDD e os principios da POO(Programação orientada a objeto) e também os principios de SOLID, o serviço de frontend já desenvolvido esperava apenas o desenvolvimento do backend com a regra de negocio adequada para popular corretamente o frontend, seu banco de dados é gerenciado pelo Sequelize, seguindo a arquitetura MSC.
 
 - Tecnologias utilizadas: Typescript, TDD, POO, Sequelize, Node.js, JWT, Joi, Docker, docker-compose, Mocha, Chai, Sinon, MySQL.
 
